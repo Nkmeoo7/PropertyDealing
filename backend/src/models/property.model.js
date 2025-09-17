@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const propertySchema = new mongoose.model({
+const propertySchema = new mongoose.Schema({
 
   title: {
     type: String,
@@ -12,7 +12,12 @@ const propertySchema = new mongoose.model({
   },
   propertyType: {
     type: String,
-    enum: ['availablle', 'sold'],
+    enum: ['flat', 'house', 'plot'],
+    default: 'available'
+  },
+  status: {
+    type: String,
+    enum: ['available', 'sold'],
     default: 'available'
   },
   location: {
@@ -24,7 +29,7 @@ const propertySchema = new mongoose.model({
     required: true
   },
   price: {
-    type: String,
+    type: Number,
     required: true
   },
   //type of propertyType
@@ -48,7 +53,8 @@ const propertySchema = new mongoose.model({
   //refer to who listed the Property
   lister: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
 
 

@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { generatetoken } from "../lib/jwt.token.js";
 import User from "../models/user.model.js";
+import WelcomeBonus from "../models/welcomeBonus.model.js";
 
 
 
@@ -46,10 +47,15 @@ export const signup = async (req, res) => {
       await newUser.save();
 
       generatetoken(newUser._id, res);
+
+      await WelcomeBonus.create({ user: newUser._id });
+
+
       res.status(201).json({
         _id: newUser._id,
         fullName: newUser.fullName,
         phoneNumber: newUser.phoneNumber,
+
 
 
       })
